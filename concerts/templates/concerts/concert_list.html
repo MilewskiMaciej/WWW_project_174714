@@ -1,0 +1,35 @@
+{% extends 'concerts/base.html' %}
+
+{% block content %}
+    <h2>Nadchodzące koncerty</h2>
+    {% for concert in concerts %}
+        <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+            <h3>{{ concert.title }} ({{ concert.get_status_display }})</h3>
+            <p><strong>Scena:</strong> {{ concert.stage.name }} ({{ concert.stage.location }})</p>
+            <p><strong>Termin:</strong> {{ concert.start_time|date:"d.m.Y H:i" }} – {{ concert.end_time|date:"d.m.Y H:i" }}</p>
+            <h4 style="margin-top: 15px; margin-bottom: 5px;">Line-up:</h4>
+            <ul>
+                {% for slot in concert.lineup_slots.all %}
+                    <li>
+                        <strong>{{ slot.artist.name }}</strong> ({{ slot.artist.genre }}) 
+                        — {{ slot.performance_start|date:"H:i" }} do {{ slot.performance_end|date:"H:i" }}
+                    </li>
+                {% empty %}
+                    <li>Brak szczegółów.</li>
+                {% endfor %}
+            </ul>
+            <h4 style="margin-top: 15px; margin-bottom: 5px;">Ceny biletów:</h4>
+            <ul>
+                {% for tier in concert.ticket_tiers.all %}
+                    <li>
+                        <strong>{{ tier.name }}:</strong> {{ tier.price }} PLN (pula: {{ tier.quantity_available }} szt.)
+                    </li>
+                {% empty %}
+                    <li>Brak szczegółów.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% empty %}
+        <p>Brak zaplanowanych koncertów.</p>
+    {% endfor %}
+{% endblock %}

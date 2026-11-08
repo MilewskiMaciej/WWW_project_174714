@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}StageHub{% endblock %}</title>
+</head>
+<body style="font-family: sans-serif; max-width: 960px; margin: 20px auto; padding: 0 15px;">
+    <header style="border-bottom: 2px solid #1e293b; padding-bottom: 10px; margin-bottom: 20px;">
+        <h1>StageHub</h1>
+        <nav>
+            <a href="{% url 'concerts:concert-list' %}">Lista Koncertów</a> |
+            <a href="/admin/">Panel Admina</a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
